@@ -30,6 +30,7 @@ const Networth = () => {
         <>
         <div>{data}</div>
         <div>Networth</div>
+        <div>test</div>
         </>
     );
 }
