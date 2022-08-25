@@ -15,11 +15,14 @@ import Avatar from '@mui/material/Avatar';
 import Divider from '@mui/material/Divider';
 import Box from '@mui/material/Box';
 
+/*Material UI icons*/
 import HomeSharpIcon from '@mui/icons-material/HomeSharp';
 import MonetizationOnSharpIcon from '@mui/icons-material/MonetizationOnSharp';
 import TrackChangesSharpIcon from '@mui/icons-material/TrackChangesSharp';
 import HomeWorkSharpIcon from '@mui/icons-material/HomeWorkSharp';
 import VolunteerActivismSharpIcon from '@mui/icons-material/VolunteerActivismSharp';
+import AccountBalanceSharpIcon from '@mui/icons-material/AccountBalanceSharp';
+import MosqueSharpIcon from '@mui/icons-material/MosqueSharp';
 
 const drawerWidth = 240;
 
@@ -35,6 +38,11 @@ const menuItems= [
         path: 'networth'
     },
     {
+        text: 'Investment',
+        icon: <AccountBalanceSharpIcon color="secondary"/>,
+        path: 'investment'
+    },
+    {
         text: 'Goal',
         icon: <TrackChangesSharpIcon color="secondary"/>,
         path: 'goal'
@@ -43,6 +51,11 @@ const menuItems= [
         text: 'Property',
         icon: <HomeWorkSharpIcon color="secondary"/>,
         path: 'property'
+    },
+    {
+        text: 'Prayer',
+        icon: <MosqueSharpIcon color="secondary"/>,
+        path: 'prayer'
     },
     {
         text: 'Donation',
@@ -91,7 +104,7 @@ const useStyles = makeStyles((theme) => {
             bottom: 0,
             textAlign: "center",
             paddingBottom: 10,
-            paddingLeft: 60
+            paddingLeft: 100
         }
     }
 })
@@ -155,6 +168,13 @@ const Layout = () => {
                         </ListItem>
                     ))}
                 </List>
+                
+                {/*App Version*/}
+                <div className={classes.bottomPush}>
+                <Typography>
+                    v2.01
+                </Typography>
+                </div>
             </Drawer>
     
             {/* main content */}

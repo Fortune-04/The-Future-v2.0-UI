@@ -1,4 +1,6 @@
-import { useState, useEffect } from "react";
+import React,{ useState, useEffect } from "react";
+
+import NetworthFinder from "../Apis/NetworthFinder";
 
 /*Import from Material UI*/
 import { styled } from '@mui/material/styles';
@@ -15,6 +17,12 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import EditSharpIcon from '@mui/icons-material/EditSharp';
+import DeleteSharpIcon from '@mui/icons-material/DeleteSharp';
+import Stack from '@mui/material/Stack';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
 
 //Table
@@ -38,18 +46,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-//Table dummy data
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
+//Snackbar
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 //Style for modal
 const style = {
@@ -64,112 +64,301 @@ const style = {
   p: 4,
 };
 
-
 const Networth = () => {
 
-  //To open and close modal
+  //To open and close add modal
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  //Keep temporary data from API
-  const [data,setData] = useState();
+  //To open and close update modal
+  const [openUpdate, setOpenUpdate] = useState(false);
+  const handleOpenUpdate = (id,name,value) => {
+    setId(id)
+    setName(name)
+    setValue(value)
+    setOpenUpdate(true)
+  }
+  const handleCloseUpdate = () => {
+    setId()
+    setName("")
+    setValue()
+    setOpenUpdate(false)
+  }
 
-  const handleSubmit = () =>{
+  //To open and close delete confirmation modal
+  const [openDelModal, setOpenDelModal] = useState(false);
+  const handleOpenDelModal = (id) => {
+    setId(id)
+    setOpenDelModal(true)
+  }
+  const handleCloseDelModal = () => setOpenDelModal(false);
+
+  //Snackbar for update
+  const [openSnackUp, setOpenSnackUp] = useState(false);
+  const handleClickSnackUp = () => {
+    setOpenSnackUp(true)
+  };
+  const handleCloseSnackUp = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenSnackUp(false);
+  };
+
+  //Snackbar for delete
+  const [openSnackDel, setOpenSnackDel] = useState(false);
+  const handleClickSnackDel = () => {
+    setOpenSnackDel(true)
+  };
+  const handleCloseSnackDel = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenSnackDel(false);
+  };
+
+  //Keep temporary data from API
+  const [datas, setDatas] = useState([]);
+  const [names, setName] = useState("");
+  const [values, setValue] = useState();
+  const [id, setId] = useState();
+
+  const handleSubmit = async(e) =>{
+    e.preventDefault()
+    try {
+      const body = {names, values};
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/networth/add",
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json"
+          },
+          body: JSON.stringify(body)
+        }
+      );
+      console.log(response);
+      
+    } catch (err) {
+        console.error(err.message);
+    }
+  }
+
+  const handleDelete = async() => {
+    try{
+      const response = await NetworthFinder.delete(`/delete/${id}`)
+      setDatas(datas.filter(data => {
+        return data.id !== id
+      }))
+      console.log(response);
+      setOpenDelModal(false)
+      setOpenSnackDel(true)
+    } catch(err){
+      console.log(err)
+    }
+  }
+
+  const handleUpdate = async(e) => {
+    e.preventDefault();
+    try {
+        const response = await NetworthFinder.put(`/update/${id}`, {names, values})
+    } catch (error) {
+        console.log(error)
+    }
+    setOpenUpdate(false)
   }
 
   useEffect(() => {
 
-      const fetchData = async () => {
-          try {
-              const res = await fetch("http://127.0.0.1:8000/api/networth", {
-                  method: "GET"
-              });
-      
-              const parseData = await res.json();
-              console.log(parseData);
-              setData(parseData);
-
-              } catch (err) {
-              console.error(err.message);
+    const fetchData = async () => {
+      try {
+        const response = await NetworthFinder.get("/")
+        console.log(response.data.length);
+        if(response.data.length !==0 ){
+          for(let i=0;i<response.data.length;i++){
+            setDatas(data => [...data, response.data[i]])
           }
-      };
+        }
+      } catch (err) {
+        console.error(err.message);
+      }
+    };
 
-      fetchData();
+    fetchData();
 
   },[])
+
+  console.log(names)
+  console.log(values)
+  console.log(id)
 
   return(
     <>
     <TableContainer component={Paper}>
-    <Table sx={{ minWidth: 700 }} aria-label="customized table">
+      <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
         <TableRow>
-            <StyledTableCell>Dessert (100g serving)</StyledTableCell>
-            <StyledTableCell align="right">Calories</StyledTableCell>
-            <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell>
+          <StyledTableCell>Name</StyledTableCell>
+          <StyledTableCell align="right">Value</StyledTableCell>
+          <StyledTableCell align="right">Edit</StyledTableCell>
+          <StyledTableCell align="right">Delete</StyledTableCell>
         </TableRow>
         </TableHead>
         <TableBody>
-        {rows.map((row) => (
-            <StyledTableRow key={row.name}>
-            <StyledTableCell component="th" scope="row">
-                {row.name}
-            </StyledTableCell>
-            <StyledTableCell align="right">{row.calories}</StyledTableCell>
-            <StyledTableCell align="right">{row.fat}</StyledTableCell>
-            <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-            <StyledTableCell align="right">{row.protein}</StyledTableCell>
-            </StyledTableRow>
+        {datas && datas.map((data) => (
+          <StyledTableRow key={data.id}>
+          <StyledTableCell component="th" scope="row">
+              {data.names}
+          </StyledTableCell>
+          <StyledTableCell align="right">{data.values}</StyledTableCell>
+          {/* <StyledTableCell align="right">
+            <Stack direction="row-reverse" spacing={1} >
+              <IconButton onClick={handleOpenUpdate} color="secondary" aria-label="add an alarm">
+                <EditSharpIcon />
+              </IconButton>
+              <IconButton color="primary" aria-label="add to shopping cart">
+                <DeleteSharpIcon />
+              </IconButton>
+            </Stack>
+          </StyledTableCell> */}
+          <StyledTableCell align="right">
+            <IconButton onClick={() => handleOpenUpdate(data.id, data.names, data.values)} color="secondary" aria-label="add an alarm">
+              <EditSharpIcon />
+            </IconButton>
+          </StyledTableCell>
+          <StyledTableCell align="right">
+            <IconButton onClick={() => handleOpenDelModal(data.id)} color="primary" aria-label="add to shopping cart">
+              <DeleteSharpIcon />
+            </IconButton>
+          </StyledTableCell>
+          </StyledTableRow>
         ))}
         </TableBody>
-    </Table>
+      </Table>
     </TableContainer>
-    <Button onClick={handleOpen} variant="contained">Add</Button>
+
+    <Box
+      display="flex" 
+      sx={{mt:2}} 
+    >
+      <Box m="auto">
+        <Stack direction="row" spacing={1} >
+          <Button onClick={handleOpen} variant="contained">Add</Button>
+          <Button variant="contained">Update</Button>
+        </Stack>
+      </Box>
+    </Box>
+    
+    {/*Modal for Add*/}
     <Modal
-        open={open}
-        // onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Add Treasure
-          </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="name"
-              label="Name"
-              name="name"
-              // value={email}
-              // onChange={e => onChange(e)}
-              autoComplete="name"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="value"
-              label="Value"
-              id="value"
-              // value={password}
-              // onChange={e => onChange(e)}
-              autoComplete="current-password"
-              InputProps={{
-                startAdornment: <InputAdornment position="start">RM</InputAdornment>,
-              }}
-            />
+      open={open}
+      // onClose={handleClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <Box sx={style}>
+        <Typography id="modal-modal-title" variant="h6" component="h2">
+          Add Wealth
+        </Typography>
+        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="name"
+            label="Name"
+            name="name"
+            value={names}
+            onChange={e => setName(e.target.value)}
+            autoComplete="name"
+            autoFocus
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="value"
+            label="Value"
+            id="value"
+            value={values}
+            onChange={e => setValue(e.target.value)}
+            autoComplete="current-password"
+            InputProps={{
+              startAdornment: <InputAdornment position="start">MYR</InputAdornment>,
+            }}
+          />
+          <Stack direction="row" spacing={1} sx={{mt:2}} >
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            // sx={{ mt: 3, mb: 2 }}
+            // onClick={handleClose}
+          >
+            Confirm
+          </Button>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            // sx={{ mt: 3, mb: 2 }}
+            onClick={handleClose}
+          >
+            Cancel
+          </Button>
+          </Stack>
+        </Box>
+      </Box>
+    </Modal>
+
+    {/*Modal for Update*/}
+    <Modal
+      open={openUpdate}
+      // onClose={handleClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <Box sx={style}>
+        <Typography id="modal-modal-title" variant="h6" component="h2">
+          Update Wealth
+        </Typography>
+        <Box component="form" noValidate onSubmit={handleUpdate} sx={{ mt: 1 }}>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="name"
+            label="Name"
+            name="name"
+            value={names}
+            onChange={e => setName(e.target.value)}
+            autoComplete="name"
+            autoFocus
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="value"
+            label="Value"
+            id="value"
+            value={values}
+            onChange={e => setValue(e.target.value)}
+            autoComplete="current-password"
+            InputProps={{
+              startAdornment: <InputAdornment position="start">MYR</InputAdornment>,
+            }}
+          />
+          <Stack direction="row" spacing={1} sx={{mt:2}} >
             <Button
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              // sx={{ mt: 3, mb: 2 }}
+              onClick={handleClickSnackUp}
             >
               Confirm
             </Button>
@@ -177,17 +366,65 @@ const Networth = () => {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              onClick={handleClose}
+              // sx={{ mt: 3, mb: 2 }}
+              onClick={handleCloseUpdate}
             >
               Cancel
             </Button>
-          </Box>
+          </Stack>
         </Box>
-      </Modal>
+      </Box>
+    </Modal>
 
-      <Typography>{data}</Typography>
-      
+    {/*Modal for Delete confirmation*/}
+    <Modal
+      open={openDelModal}
+      // onClose={handleClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <Box sx={style}>
+        <Typography id="modal-modal-title" variant="h6" component="h2">
+          Are you sure you want to delete?
+        </Typography>
+        <Box sx={{ mt: 1 }}>
+          <Stack direction="row" spacing={1} sx={{mt:2}} >
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              // sx={{ mt: 3, mb: 2 }}
+              onClick={handleDelete}
+            >
+              Confirm
+            </Button>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              // sx={{ mt: 3, mb: 2 }}
+              onClick={handleCloseDelModal}
+            >
+              Cancel
+            </Button>
+          </Stack>
+        </Box>
+      </Box>
+    </Modal>
+
+    {/*Snackbar for updated item*/}
+    <Snackbar open={openSnackUp} autoHideDuration={6000} onClose={handleCloseSnackUp}>
+      <Alert onClose={handleCloseSnackUp} severity="success" sx={{ width: '100%' }}>
+        Successfully update!
+      </Alert>
+    </Snackbar>
+
+    {/*Snackbar for deleted item*/}
+    <Snackbar open={openSnackDel} autoHideDuration={6000} onClose={handleCloseSnackDel}>
+      <Alert onClose={handleCloseSnackDel} severity="success" sx={{ width: '100%' }}>
+        Successfully delete!
+      </Alert>
+    </Snackbar>
     </>
   );
 }
