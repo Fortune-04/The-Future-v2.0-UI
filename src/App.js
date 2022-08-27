@@ -11,6 +11,7 @@ import Layout from "./Components/Layout";
 import Home from "./Components/Home";
 import Property from "./Components/Property";
 import Investment from "./Components/Investment";
+import Prayer from "./Components/Prayer";
 
 const theme = createTheme({
   palette: {
@@ -41,6 +42,7 @@ function App() {
             <Route path='investment' element={<Investment/>}/>
             <Route path='goal' element={<Goal/>}/>
             <Route path='property' element={<Property/>}/>
+            <Route path='prayer' element={<Prayer/>}/>
             <Route path='donation' element={<Donation/>}/>
           </Route>
         </Routes>

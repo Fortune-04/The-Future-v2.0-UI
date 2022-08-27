@@ -23,6 +23,10 @@ import DeleteSharpIcon from '@mui/icons-material/DeleteSharp';
 import Stack from '@mui/material/Stack';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
 
 
 //Table
@@ -73,10 +77,12 @@ const Networth = () => {
 
   //To open and close update modal
   const [openUpdate, setOpenUpdate] = useState(false);
-  const handleOpenUpdate = (id,name,value) => {
+  const handleOpenUpdate = (id,name,value,exvalue,invest) => {
     setId(id)
     setName(name)
     setValue(value)
+    setexvalue(exvalue)
+    setInvest(invest)
     setOpenUpdate(true)
   }
   const handleCloseUpdate = () => {
@@ -124,12 +130,14 @@ const Networth = () => {
   const [datas, setDatas] = useState([]);
   const [names, setName] = useState("");
   const [values, setValue] = useState();
+  const [exvalue, setexvalue] = useState();
+  const [invest, setInvest] = useState();
   const [id, setId] = useState();
 
   const handleSubmit = async(e) =>{
     e.preventDefault()
     try {
-      const body = {names, values};
+      const body = {names, values, exvalue, invest};
       const response = await fetch(
         "http://127.0.0.1:8000/api/networth/add",
         {
@@ -141,11 +149,13 @@ const Networth = () => {
         }
       );
       console.log(response);
+      setOpen(false)
       
     } catch (err) {
         console.error(err.message);
     }
-  }
+  }	
+
 
   const handleDelete = async() => {
     try{
@@ -164,7 +174,7 @@ const Networth = () => {
   const handleUpdate = async(e) => {
     e.preventDefault();
     try {
-        const response = await NetworthFinder.put(`/update/${id}`, {names, values})
+        const response = await NetworthFinder.put(`/update/${id}`, {names, values, exvalue, invest})
     } catch (error) {
         console.log(error)
     }
@@ -194,6 +204,8 @@ const Networth = () => {
   console.log(names)
   console.log(values)
   console.log(id)
+  console.log(exvalue)
+  console.log(invest)
 
   return(
     <>
@@ -225,7 +237,7 @@ const Networth = () => {
             </Stack>
           </StyledTableCell> */}
           <StyledTableCell align="right">
-            <IconButton onClick={() => handleOpenUpdate(data.id, data.names, data.values)} color="secondary" aria-label="add an alarm">
+            <IconButton onClick={() => handleOpenUpdate(data.id, data.names, data.values, data.exvalue, data.invest)} color="secondary" aria-label="add an alarm">
               <EditSharpIcon />
             </IconButton>
           </StyledTableCell>
@@ -290,6 +302,32 @@ const Networth = () => {
               startAdornment: <InputAdornment position="start">MYR</InputAdornment>,
             }}
           />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="exvalue"
+            label="Expected Value"
+            id="exvalue"
+            value={exvalue}
+            onChange={e => setexvalue(e.target.value)}
+            InputProps={{
+              startAdornment: <InputAdornment position="start">MYR</InputAdornment>,
+            }}
+          />
+          <FormControl fullWidth sx={{ mt: 1 }}>
+            <InputLabel id="invest-id">Investment?</InputLabel>
+            <Select
+              labelId="invest-id"
+              id="demo-simple-select"
+              value={invest}
+              label="Investment?"
+              onChange={e => setInvest(e.target.value)}
+            >
+              <MenuItem value={true}>Yes</MenuItem>
+              <MenuItem value={false}>No</MenuItem>
+            </Select>
+          </FormControl>
           <Stack direction="row" spacing={1} sx={{mt:2}} >
           <Button
             type="submit"
@@ -352,6 +390,32 @@ const Networth = () => {
               startAdornment: <InputAdornment position="start">MYR</InputAdornment>,
             }}
           />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="exvalue"
+            label="Expected Value"
+            id="exvalue"
+            value={exvalue}
+            onChange={e => setexvalue(e.target.value)}
+            InputProps={{
+              startAdornment: <InputAdornment position="start">MYR</InputAdornment>,
+            }}
+          />
+          <FormControl fullWidth sx={{ mt: 1 }}>
+            <InputLabel id="invest-id">Investment?</InputLabel>
+            <Select
+              labelId="invest-id"
+              id="demo-simple-select"
+              value={invest}
+              label="Investment?"
+              onChange={e => setInvest(e.target.value)}
+            >
+              <MenuItem value={true}>Yes</MenuItem>
+              <MenuItem value={false}>No</MenuItem>
+            </Select>
+          </FormControl>
           <Stack direction="row" spacing={1} sx={{mt:2}} >
             <Button
               type="submit"

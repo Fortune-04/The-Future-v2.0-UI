@@ -172,7 +172,7 @@ const Layout = () => {
                 {/*App Version*/}
                 <div className={classes.bottomPush}>
                 <Typography>
-                    v2.01
+                    v2.02
                 </Typography>
                 </div>
             </Drawer>
