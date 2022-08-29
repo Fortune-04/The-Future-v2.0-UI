@@ -23,6 +23,7 @@ import HomeWorkSharpIcon from '@mui/icons-material/HomeWorkSharp';
 import VolunteerActivismSharpIcon from '@mui/icons-material/VolunteerActivismSharp';
 import AccountBalanceSharpIcon from '@mui/icons-material/AccountBalanceSharp';
 import MosqueSharpIcon from '@mui/icons-material/MosqueSharp';
+import DescriptionSharpIcon from '@mui/icons-material/DescriptionSharp';
 
 const drawerWidth = 240;
 
@@ -56,6 +57,11 @@ const menuItems= [
         text: 'Prayer',
         icon: <MosqueSharpIcon color="secondary"/>,
         path: 'prayer'
+    },
+    {
+        text: 'Surah',
+        icon: <DescriptionSharpIcon color="secondary"/>,
+        path: 'surah'
     },
     {
         text: 'Donation',
