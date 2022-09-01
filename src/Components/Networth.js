@@ -139,7 +139,7 @@ const Networth = () => {
     try {
       const body = {names, values, exvalue, invest};
       const response = await fetch(
-        "http://127.0.0.1:8000/api/networth/add",
+        "http://127.0.0.1:8000/api/networth/create",
         {
           method: "POST",
           headers: {
