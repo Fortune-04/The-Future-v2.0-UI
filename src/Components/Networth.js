@@ -1,5 +1,6 @@
 import React,{ useState, useEffect } from "react";
 
+/*Call API using Axios*/
 import NetworthFinder from "../Apis/NetworthFinder";
 
 /*Import from Material UI*/
@@ -18,8 +19,6 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
-import EditSharpIcon from '@mui/icons-material/EditSharp';
-import DeleteSharpIcon from '@mui/icons-material/DeleteSharp';
 import Stack from '@mui/material/Stack';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
@@ -27,6 +26,10 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+
+/*Import from Material Icons*/
+import EditSharpIcon from '@mui/icons-material/EditSharp';
+import DeleteSharpIcon from '@mui/icons-material/DeleteSharp';
 
 
 //Table
@@ -152,7 +155,7 @@ const Networth = () => {
       setOpen(false)
       
     } catch (err) {
-        console.error(err.message);
+      console.error(err.message);
     }
   }	
 
@@ -174,9 +177,9 @@ const Networth = () => {
   const handleUpdate = async(e) => {
     e.preventDefault();
     try {
-        const response = await NetworthFinder.put(`/update/${id}`, {names, values, exvalue, invest})
+      const response = await NetworthFinder.put(`/update/${id}`, {names, values, exvalue, invest})
     } catch (error) {
-        console.log(error)
+      console.log(error)
     }
     setOpenUpdate(false)
   }
@@ -201,12 +204,6 @@ const Networth = () => {
 
   },[])
 
-  console.log(names)
-  console.log(values)
-  console.log(id)
-  console.log(exvalue)
-  console.log(invest)
-
   return(
     <>
     <TableContainer component={Paper}>
@@ -226,23 +223,13 @@ const Networth = () => {
               {data.names}
           </StyledTableCell>
           <StyledTableCell align="right">{data.values}</StyledTableCell>
-          {/* <StyledTableCell align="right">
-            <Stack direction="row-reverse" spacing={1} >
-              <IconButton onClick={handleOpenUpdate} color="secondary" aria-label="add an alarm">
-                <EditSharpIcon />
-              </IconButton>
-              <IconButton color="primary" aria-label="add to shopping cart">
-                <DeleteSharpIcon />
-              </IconButton>
-            </Stack>
-          </StyledTableCell> */}
           <StyledTableCell align="right">
             <IconButton onClick={() => handleOpenUpdate(data.id, data.names, data.values, data.exvalue, data.invest)} color="secondary" aria-label="add an alarm">
               <EditSharpIcon />
             </IconButton>
           </StyledTableCell>
           <StyledTableCell align="right">
-            <IconButton onClick={() => handleOpenDelModal(data.id)} color="primary" aria-label="add to shopping cart">
+            <IconButton onClick={() => handleOpenDelModal(data.id)} color="primary" aria-label="Delete-Networth">
               <DeleteSharpIcon />
             </IconButton>
           </StyledTableCell>
