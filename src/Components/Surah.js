@@ -97,6 +97,7 @@ const Property = () => {
     const [datas, setDatas] = useState([]);
     const [id, setId] = useState();
 
+    //Create Data
     const handleSubmit = async(e) =>{
         e.preventDefault()
         try {
@@ -118,18 +119,22 @@ const Property = () => {
         }
     }
 
+    //Delete Data
     const handleDelete = async() => {
         try{
-          const response = await SurahFinder.delete(`/delete/${id}`)
-          setDatas(datas.filter(data => {
-            return data.id !== id
-          }))
-          console.log(response)
-        } catch(err){
-          console.log(err)
+            const response = await SurahFinder.delete(`/delete/${id}`)
+            setDatas(datas.filter(data => {
+                return data.id !== id
+            }))
+            console.log(response)
+            setOpenDelModal(false)
+            setOpenSnackDel(true)
+            } catch(err){
+            console.log(err)
         }
-      }
+    }
 
+    //Display data
     useEffect(() => {
 
         const fetchData = async () => {

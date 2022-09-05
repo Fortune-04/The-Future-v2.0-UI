@@ -12,12 +12,12 @@ const Prayer = () => {
 
     return(
         <Container>
-            <Box
+            {/* <Box
                 display="flex"  
             >
-                <Box m="auto">
+                <Box m="auto"> */}
                 <Grid container spacing={3}>
-                    <Grid item xs={2}>
+                    <Grid item xs={4}>
                     <Card sx={{ maxWidth: 345 }}>
                     <CardHeader
                         title="200"
@@ -35,29 +35,29 @@ const Prayer = () => {
                         </CardContent>
                     </Card>
                     </Grid>
-                    <Grid item xs={2}>
+                    <Grid item xs={4}>
                     <Paper variant="outlined">
                         <Typography>Dhuhr</Typography>
                     </Paper>
                     </Grid>
-                    <Grid item xs={2}>
+                    <Grid item xs={4}>
                     <Paper variant="outlined">
                         <Typography>Asr</Typography>
                     </Paper>
                     </Grid>
-                    <Grid item xs={2}>
+                    <Grid item xs={6}>
                     <Paper variant="outlined">
                         <Typography>Maghrib</Typography>
                     </Paper>
                     </Grid>
-                    <Grid item xs={2}>
+                    <Grid item xs={6}>
                     <Paper variant="outlined">
                         <Typography>Isha'a</Typography>
                     </Paper>
                     </Grid>
                 </Grid>
-                </Box>
-            </Box>
+                {/* </Box>
+            </Box> */}
         </Container>
     )
 }
