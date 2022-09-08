@@ -72,6 +72,10 @@ const Property = () => {
             );
             console.log(response);
             setOpenAdd(false)
+            setName("")
+            setDescription("")
+            setDatas([])
+            fetchData();
           
         } catch (err) {
           console.error(err.message);
@@ -92,22 +96,22 @@ const Property = () => {
         }
     }
 
-    useEffect(() => {
-
-        const fetchData = async () => {
-            try {
-                const response = await PropertyFinder.get("/")
-                console.log(response.data.length);
-                if(response.data.length !==0 ){
+    const fetchData = async () => {
+        try {
+            const response = await PropertyFinder.get("/")
+            console.log(response.data.length);
+            if(response.data.length !==0 ){
                 for(let i=0;i<response.data.length;i++){
                     setDatas(data => [...data, response.data[i]])
                 }
-                }
-            } catch (err) {
-                console.error(err.message);
             }
-        };
-    
+        } catch (err) {
+            console.error(err.message);
+        }
+    };
+
+    useEffect(() => {
+
         fetchData();
     
     },[])
@@ -128,7 +132,7 @@ const Property = () => {
         <Divider/>
         <Grid container rowSpacing={1} sx={{mt:2}} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
         {datas && datas.map((data) => (
-            <Grid item xs={3}>
+            <Grid item xs={3} key={data.id}>
             <Card >
                 <CardMedia
                     component="img"
@@ -145,8 +149,8 @@ const Property = () => {
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <IconButton sx={{marginLeft: 'auto'}} aria-label="delete-property-button">
-                        <DeleteOutlineSharpIcon onClick={() => handleOpenDelModal(data.id)}/>
+                    <IconButton sx={{marginLeft: 'auto'}} aria-label="delete-property-button" onClick={() => handleOpenDelModal(data.id)}>
+                        <DeleteOutlineSharpIcon/>
                     </IconButton>
                 </CardActions>
             </Card>
@@ -206,8 +210,8 @@ const Property = () => {
 
         {/*Modal for Delete confirmation*/}
         <Modal
-        open={openDelModal}
-        // onClose={handleClose}
+            open={openDelModal}
+            // onClose={handleClose}
         >
         <Box sx={style}>
             <Typography variant="h6" component="h2">
