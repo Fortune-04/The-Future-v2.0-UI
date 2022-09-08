@@ -46,7 +46,7 @@ const Goal = () => {
     const [datas, setDatas] = useState([]);
     const [name, setName] = useState("");
     const [description, setDescription] = useState("")
-    const [id, setId] = useState();
+    // const [id, setId] = useState();
 
     const handleSubmit = async(e) =>{
         e.preventDefault()
@@ -64,28 +64,32 @@ const Goal = () => {
             );
             console.log(response);
             setOpenAdd(false)
+            setName("")
+            setDescription("")
+            setDatas([])
+            fetchData();
           
         } catch (err) {
           console.error(err.message);
         }
     }
 
-    useEffect(() => {
-
-        const fetchData = async () => {
-            try {
-                const response = await GoalFinder.get("/")
-                console.log(response.data.length);
-                if(response.data.length !==0 ){
+    const fetchData = async () => {
+        try {
+            const response = await GoalFinder.get("/")
+            console.log(response.data.length);
+            if(response.data.length !==0 ){
                 for(let i=0;i<response.data.length;i++){
                     setDatas(data => [...data, response.data[i]])
                 }
-                }
-            } catch (err) {
-                console.error(err.message);
             }
-        };
-    
+        } catch (err) {
+            console.error(err.message);
+        }
+    };
+
+    useEffect(() => {
+
         fetchData();
     
     },[])
@@ -106,7 +110,7 @@ const Goal = () => {
         <Divider/>
         <Grid container rowSpacing={1} sx={{mt:2}}>
         {datas && datas.map((data) => (
-            <Grid item xs={12}>
+            <Grid item xs={12} key={data.id}>
             <Card >
                 <CardMedia
                     component="img"
