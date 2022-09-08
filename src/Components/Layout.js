@@ -129,11 +129,11 @@ const Layout = () => {
                 elevation={0}
             >
                 <Toolbar>
-                    {/* <Typography className={classes.space}> */}
+                    <Typography className={classes.space}>
                         {/* Test */}
-                    {/* </Typography>
+                    </Typography>
                     <Typography>Are Lee</Typography>
-                    <Avatar className={classes.avatar} src="/" /> */}
+                    <Avatar className={classes.avatar} src="/" />
                 </Toolbar>
             </AppBar>
             
