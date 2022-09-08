@@ -79,9 +79,9 @@ const Property = () => {
     //Snackbar for delete
     const [openSnackDel, setOpenSnackDel] = useState(false);
 
-    const handleClickSnackDel = () => {
-        setOpenSnackDel(true)
-    };
+    // const handleClickSnackDel = () => {
+    //     setOpenSnackDel(true)
+    // };
 
     const handleCloseSnackDel = (event, reason) => {
         if (reason === 'clickaway') {
@@ -113,6 +113,10 @@ const Property = () => {
                 }
             );
             console.log(response)
+            setDatas([])
+            setName("")
+            setPage()
+            fetchData();
             
         } catch (err) {
             console.error(err.message);
@@ -134,23 +138,23 @@ const Property = () => {
         }
     }
 
+    const fetchData = async () => {
+        try {
+            const response = await SurahFinder.get("/")
+            console.log(response.data.length);
+            if(response.data.length !==0 ){
+                for(let i=0;i<response.data.length;i++){
+                    setDatas(data => [...data, response.data[i]])
+                }
+            }
+        } catch (err) {
+            console.error(err.message);
+        }
+    };
+
     //Display data
     useEffect(() => {
 
-        const fetchData = async () => {
-            try {
-                const response = await SurahFinder.get("/")
-                console.log(response.data.length);
-                if(response.data.length !==0 ){
-                    for(let i=0;i<response.data.length;i++){
-                        setDatas(data => [...data, response.data[i]])
-                    }
-                }
-            } catch (err) {
-                console.error(err.message);
-            }
-        };
-      
         fetchData();
 
     }, [])
