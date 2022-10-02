@@ -16,6 +16,14 @@ import IconButton from '@mui/material/IconButton';
 import KeyboardDoubleArrowRightSharpIcon from '@mui/icons-material/KeyboardDoubleArrowRightSharp';
 import KeyboardDoubleArrowLeftSharpIcon from '@mui/icons-material/KeyboardDoubleArrowLeftSharp';
 import SyncAltIcon from '@mui/icons-material/SyncAlt';
+import Button from '@mui/material/Button';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
+//Snackbar
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const Prayer = () => {
 
@@ -25,6 +33,19 @@ const Prayer = () => {
     const [asr, setAsr] = useState();
     const [maghrib, setMaghrib] = useState();
     const [isha, setIsha] = useState();
+
+    //Snackbar for update
+    const [openSnackUp, setOpenSnackUp] = useState(false);
+    const handleClickSnackUp = () => {
+        setOpenSnackUp(true)
+    };
+    const handleCloseSnackUp = (event, reason) => {
+        if (reason === 'clickaway') {
+        return;
+        }
+
+        setOpenSnackUp(false);
+    };
 
     const handleAdd = async(value) => {
 
@@ -67,6 +88,7 @@ const Prayer = () => {
             const response = await PrayerFinder.put(`/update/4`, {fajr, dhuhr, asr, maghrib, isha})
             console.log(response);
             fetchData();
+            handleClickSnackUp();
             
         } catch (err) {
             console.error(err.message);
@@ -96,6 +118,7 @@ const Prayer = () => {
     },[])
 
     return(
+        <>
         <Container>
             <Box>
                 <Stack
@@ -205,10 +228,27 @@ const Prayer = () => {
                     </Card>
                 </Stack>
             </Box>
-            <IconButton sx={{mt: 3}} color="secondary" onClick={handleUpdate}>
+
+            <Stack 
+                justifyContent="center"
+                alignItems="center"
+            >
+                <Button variant="contained" endIcon={<SyncAltIcon />} sx={{mt: 5}} onClick={handleUpdate}>
+                    Update
+                </Button>
+            </Stack>
+            {/* <IconButton sx={{mt: 3}} color="secondary" onClick={handleUpdate}>
                 <SyncAltIcon/>
-            </IconButton>
+            </IconButton> */}
         </Container>
+
+        {/*Snackbar for updated item*/}
+        <Snackbar open={openSnackUp} autoHideDuration={6000} onClose={handleCloseSnackUp}>
+            <Alert onClose={handleCloseSnackUp} severity="success" sx={{ width: '100%' }}>
+                Successfully update!
+            </Alert>
+        </Snackbar>
+        </>
     )
 }
 

@@ -115,7 +115,7 @@ const Property = () => {
             console.log(response)
             setDatas([])
             setName("")
-            setPage()
+            setPage(0);
             fetchData();
             
         } catch (err) {
@@ -162,12 +162,12 @@ const Property = () => {
 
     return(
         <>
+            <Paper sx={{p: 2, mb:2}} elevation={4}>
             <form noValidate autoComplete="off" onSubmit={handleSubmit}>
-                <Stack direction="row" spacing={1}>
+                <Stack direction="row" spacing={2} sx={{dispalay :"flex"}}>
                     <TextField
-                        margin="normal"
                         required
-                        // fullWidth
+                        fullWidth
                         id="name"
                         label="Name"
                         name="name"
@@ -175,9 +175,8 @@ const Property = () => {
                         onChange={e => setName(e.target.value)}
                     />
                     <TextField
-                        margin="normal"
                         required
-                        // fullWidth
+                        fullWidth
                         name="page"
                         label="Page"
                         id="page"
@@ -193,6 +192,7 @@ const Property = () => {
                     </Button>
                 </Stack>
             </form>
+            </Paper>
 
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 700 }} aria-label="customized table">

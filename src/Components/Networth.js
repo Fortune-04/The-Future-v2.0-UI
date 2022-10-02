@@ -246,7 +246,7 @@ const Networth = () => {
       <Box m="auto">
         <Stack direction="row" spacing={1} >
           <Button onClick={handleOpen} variant="contained">Add</Button>
-          <Button variant="contained">Update</Button>
+          {/* <Button variant="contained">Update</Button> */}
         </Stack>
       </Box>
     </Box>
