@@ -1,5 +1,6 @@
 import React,{ useState, useEffect } from "react";
 import PropTypes from 'prop-types';
+import Goal from './Goal';
 
 /*Call API using Axios*/
 import GoalFinder from "../Apis/GoalFinder";
@@ -9,27 +10,27 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Grid from '@mui/material/Grid';
+// import Card from '@mui/material/Card';
+// import CardActions from '@mui/material/CardActions';
+// import CardContent from '@mui/material/CardContent';
+// import CardMedia from '@mui/material/CardMedia';
+// import Grid from '@mui/material/Grid';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import IconButton from '@mui/material/IconButton';
+// import IconButton from '@mui/material/IconButton';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-import LinearProgress from '@mui/material/LinearProgress';
+// import LinearProgress from '@mui/material/LinearProgress';
 
 /*Import from Material Icons*/
 import AddSharpIcon from '@mui/icons-material/AddSharp';
-import TaskAltSharpIcon from '@mui/icons-material/TaskAltSharp';
-import DriveFileRenameOutlineSharpIcon from '@mui/icons-material/DriveFileRenameOutlineSharp';
+// import TaskAltSharpIcon from '@mui/icons-material/TaskAltSharp';
+// import DriveFileRenameOutlineSharpIcon from '@mui/icons-material/DriveFileRenameOutlineSharp';
 
 //Style for modal
 const style = {
@@ -77,33 +78,34 @@ function a11yProps(index) {
     };
 }
 
-function LinearProgressWithLabel(props) {
-    return (
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <Box sx={{ width: '100%', mr: 1 }}>
-          <LinearProgress variant="determinate" {...props} />
-        </Box>
-        <Box sx={{ minWidth: 35 }}>
-          <Typography variant="body2" color="text.secondary">{`${Math.round(
-            props.value,
-          )}%`}</Typography>
-        </Box>
-      </Box>
-    );
-}
+//Progress bar
+// function LinearProgressWithLabel(props) {
+//     return (
+//       <Box sx={{ display: 'flex', alignItems: 'center' }}>
+//         <Box sx={{ width: '100%', mr: 1 }}>
+//           <LinearProgress variant="determinate" {...props} />
+//         </Box>
+//         <Box sx={{ minWidth: 35 }}>
+//           <Typography variant="body2" color="text.secondary">{`${Math.round(
+//             props.value,
+//           )}%`}</Typography>
+//         </Box>
+//       </Box>
+//     );
+// }
 
-LinearProgressWithLabel.propTypes = {
-    /**
-     * The value of the progress indicator for the determinate and buffer variants.
-     * Value between 0 and 100.
-     */
-    value: PropTypes.number.isRequired,
-};
+// LinearProgressWithLabel.propTypes = {
+//     /**
+//      * The value of the progress indicator for the determinate and buffer variants.
+//      * Value between 0 and 100.
+//      */
+//     value: PropTypes.number.isRequired,
+// };
 
 const GoalNav = () => {
 
     //Tab
-    const [value, setValue] = React.useState(0);
+    const [value, setValue] = useState(0);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -137,7 +139,7 @@ const GoalNav = () => {
     }
 
     //Progress Bar
-    const [progress, setProgress] = useState(0);
+    // const [progress, setProgress] = useState(0);
     
     //Keep temporary data for API
     const [datas, setDatas] = useState([]);
@@ -145,8 +147,8 @@ const GoalNav = () => {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [type, setType] = useState("");
-    const [current, setCurrent] = useState(0);
-    const [target, setTarget] = useState(0);
+    const [current, setCurrent] = useState("");
+    const [target, setTarget] = useState("");
 
     const handleTaskComplete = async(id) => {
         try{
@@ -184,7 +186,7 @@ const GoalNav = () => {
             setCurrent("")
             setTarget("")
             setDatas([])
-            fetchData();
+            // fetchData();
           
         } catch (err) {
           console.error(err.message);
@@ -195,42 +197,39 @@ const GoalNav = () => {
         e.preventDefault();
         try {
             const response = await GoalFinder.put(`/update/${id}`, {name, description, type, current})
+            console.log(response)
+            setName("")
+            setDescription("")
+            setType("")
+            setCurrent("")
+            setTarget("")
             setDatas([])
-            fetchData()
+            // fetchData()
         } catch (error) {
             console.log(error)
         }
         setOpenUpdate(false)
     }
 
-    const fetchData = async () => {
-        try {
-            const response = await GoalFinder.get("/")
-            console.log(response.data.length);
-            if(response.data.length !==0 ){
-                for(let i=0;i<response.data.length;i++){
-                    setDatas(data => [...data, response.data[i]])
-                }
-            }
-        } catch (err) {
-            console.error(err.message);
-        }
-    };
-
-    useEffect(() => {
-
-        fetchData();
-    
-    },[])
+    // const fetchData = async () => {
+    //     try {
+    //         const response = await GoalFinder.get("/")
+    //         console.log(response.data.length);
+    //         if(response.data.length !==0 ){
+    //             for(let i=0;i<response.data.length;i++){
+    //                 setDatas(data => [...data, response.data[i]])
+    //             }
+    //         }
+    //     } catch (err) {
+    //         console.error(err.message);
+    //     }
+    // };
 
     // useEffect(() => {
-    //     const timer = setInterval(() => {
-    //       setProgress((prevProgress) => (prevProgress >= 100 ? 10 : prevProgress + 10));
-    //     }, 800);
-    //     return () => {
-    //       clearInterval(timer);
-    //     };
-    // }, []);
+
+    //     fetchData();
+    
+    // },[])
 
     return(
         <>
@@ -251,7 +250,7 @@ const GoalNav = () => {
             </Button>
         </Stack>
         <Divider/>
-        <Grid container rowSpacing={1} sx={{mt:2}}>
+        {/* <Grid container rowSpacing={1} sx={{mt:2}}>
         {datas && datas.map((data) => (
             <Grid item xs={12} key={data.id}>
             <Card  >
@@ -282,9 +281,22 @@ const GoalNav = () => {
                 </CardActions>
                 </Box>
             </Card>
-        </Grid>
+            </Grid>
         ))} 
-        </Grid>
+        </Grid> */}
+
+        <TabPanel value={value} index={0}>
+            <Goal type="ultimate" handleOpenUpdate={handleOpenUpdate} handleTaskComplete={handleTaskComplete}/>
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+            <Goal type="normie" handleOpenUpdate={handleOpenUpdate} handleTaskComplete={handleTaskComplete}/>
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+            <Goal type="knowledge" handleOpenUpdate={handleOpenUpdate} handleTaskComplete={handleTaskComplete}/>
+        </TabPanel>
+        <TabPanel value={value} index={3}>
+            <Goal type="game" handleOpenUpdate={handleOpenUpdate} handleTaskComplete={handleTaskComplete}/>
+        </TabPanel>
 
         {/*Modal for Add*/}
         <Modal

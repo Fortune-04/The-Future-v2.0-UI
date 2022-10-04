@@ -85,13 +85,19 @@ const Networth = () => {
     setName(name)
     setValue(value)
     setexvalue(exvalue)
-    setInvest(invest)
+    if(invest === 1){
+      setInvest(true)
+    }
+    else{
+      setInvest(false)
+    }
     setOpenUpdate(true)
   }
   const handleCloseUpdate = () => {
-    setId()
     setName("")
-    setValue()
+    setValue(0)
+    setexvalue(0)
+    setInvest(null)
     setOpenUpdate(false)
   }
 
@@ -178,6 +184,7 @@ const Networth = () => {
     e.preventDefault();
     try {
       const response = await NetworthFinder.put(`/update/${id}`, {names, values, exvalue, invest})
+      console.log(response)
     } catch (error) {
       console.log(error)
     }
@@ -343,8 +350,6 @@ const Networth = () => {
     <Modal
       open={openUpdate}
       // onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
         <Typography id="modal-modal-title" variant="h6" component="h2">
