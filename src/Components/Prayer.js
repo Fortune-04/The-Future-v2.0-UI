@@ -12,7 +12,7 @@ import Box from '@mui/material/Box';
 import CardHeader from '@mui/material/CardHeader';
 import Stack from '@mui/material/Stack';
 import CardActions from '@mui/material/CardActions';
-import IconButton from '@mui/material/IconButton';
+// import IconButton from '@mui/material/IconButton';
 import KeyboardDoubleArrowRightSharpIcon from '@mui/icons-material/KeyboardDoubleArrowRightSharp';
 import KeyboardDoubleArrowLeftSharpIcon from '@mui/icons-material/KeyboardDoubleArrowLeftSharp';
 import SyncAltIcon from '@mui/icons-material/SyncAlt';
@@ -131,55 +131,94 @@ const Prayer = () => {
                     <Card sx={{ minWidth: 200 }}>
                         <CardHeader
                             title="Fajr"
+                            style={{ textAlign: 'center' ,backgroundColor: "#64b5f6"}}
                         />
-                        <CardContent>
-                            <Typography variant="h2" color="text.secondary">
-                                {fajr}
-                            </Typography>
+                        <CardContent >
+                            <Box 
+                                display="flex" 
+                            >
+                                <Box m="auto">
+                                <Typography variant="h2" color="text.secondary" m="auto">
+                                    {fajr}
+                                </Typography>
+                                </Box>
+                            </Box>
                         </CardContent>
                         <CardActions>
-                            <IconButton onClick={() => handleAdd(1)}>
+                            <Button variant="contained" onClick={() => handleAdd(1)} fullWidth>
                                 <KeyboardDoubleArrowLeftSharpIcon />
-                            </IconButton>
-                            <IconButton onClick={() => handleAdd(2)}>
+                            </Button>
+                            <Button variant="contained" onClick={() => handleAdd(2)} fullWidth>
                                 <KeyboardDoubleArrowRightSharpIcon/>
-                            </IconButton>
+                            </Button>
+                            {/* <IconButton onClick={() => handleAdd(1)}>
+                                <KeyboardDoubleArrowLeftSharpIcon />
+                            </IconButton> */}
+                            {/* <IconButton onClick={() => handleAdd(2)}>
+                                <KeyboardDoubleArrowRightSharpIcon/>
+                            </IconButton> */}
                         </CardActions>
                     </Card>
                     <Card sx={{ minWidth: 200 }}>
                         <CardHeader
                             title="Dhuhr"
+                            style={{ textAlign: 'center',backgroundColor: "#64b5f6" }}
                         />
                         <CardContent>
-                            <Typography variant="h2" color="text.secondary">
-                                {dhuhr}
-                            </Typography>
+                            <Box 
+                                display="flex" 
+                            >
+                                <Box m="auto">
+                                <Typography variant="h2" color="text.secondary" m="auto">
+                                    {dhuhr}
+                                </Typography>
+                                </Box>
+                            </Box>
                         </CardContent>
                         <CardActions>
-                            <IconButton onClick={() => handleAdd(3)}>
+                            <Button variant="contained" onClick={() => handleAdd(3)} fullWidth>
+                                <KeyboardDoubleArrowLeftSharpIcon />
+                            </Button>
+                            <Button variant="contained" onClick={() => handleAdd(4)} fullWidth>
+                                <KeyboardDoubleArrowRightSharpIcon/>
+                            </Button>
+                            {/* <IconButton onClick={() => handleAdd(3)}>
                                 <KeyboardDoubleArrowLeftSharpIcon/>
                             </IconButton>
                             <IconButton onClick={() => handleAdd(4)}>
                                 <KeyboardDoubleArrowRightSharpIcon/>
-                            </IconButton>
+                            </IconButton> */}
                         </CardActions>
                     </Card>
                     <Card sx={{ minWidth: 200 }}>
                         <CardHeader
                             title="Asr"
+                            style={{ textAlign: 'center',backgroundColor: "#64b5f6"}}
                         />
                         <CardContent>
-                            <Typography variant="h2" color="text.secondary">
-                                {asr}
-                            </Typography>
+                            <Box 
+                                display="flex" 
+                            >
+                                <Box m="auto">
+                                <Typography variant="h2" color="text.secondary" m="auto">
+                                    {asr}
+                                </Typography>
+                                </Box>
+                            </Box>
                         </CardContent>
                         <CardActions>
-                            <IconButton onClick={() => handleAdd(5)}>
+                            <Button variant="contained" onClick={() => handleAdd(5)} fullWidth>
+                                <KeyboardDoubleArrowLeftSharpIcon />
+                            </Button>
+                            <Button variant="contained" onClick={() => handleAdd(6)} fullWidth>
+                                <KeyboardDoubleArrowRightSharpIcon/>
+                            </Button>
+                            {/* <IconButton onClick={() => handleAdd(5)}>
                                 <KeyboardDoubleArrowLeftSharpIcon/>
                             </IconButton>
                             <IconButton onClick={() => handleAdd(6)}>
                                 <KeyboardDoubleArrowRightSharpIcon/>
-                            </IconButton>
+                            </IconButton> */}
                         </CardActions>
                     </Card>
                 </Stack>
@@ -193,37 +232,63 @@ const Prayer = () => {
                     <Card sx={{ minWidth: 200 }}>
                         <CardHeader
                             title="Maghrib"
+                            style={{ textAlign: 'center',backgroundColor: "#64b5f6"}}
                         />
                         <CardContent>
-                            <Typography variant="h2" color="text.secondary">
-                                {maghrib}
-                            </Typography>
+                            <Box 
+                                display="flex" 
+                            >
+                                <Box m="auto">
+                                <Typography variant="h2" color="text.secondary" m="auto">
+                                    {maghrib}
+                                </Typography>
+                                </Box>
+                            </Box>
                         </CardContent>
                         <CardActions>
-                            <IconButton onClick={() => handleAdd(7)}>
+                            <Button variant="contained" onClick={() => handleAdd(7)} fullWidth>
+                                <KeyboardDoubleArrowLeftSharpIcon />
+                            </Button>
+                            <Button variant="contained" onClick={() => handleAdd(8)} fullWidth>
+                                <KeyboardDoubleArrowRightSharpIcon/>
+                            </Button>
+                            {/* <IconButton onClick={() => handleAdd(7)}>
                                 <KeyboardDoubleArrowLeftSharpIcon/>
                             </IconButton>
                             <IconButton onClick={() => handleAdd(8)}>
                                 <KeyboardDoubleArrowRightSharpIcon/>
-                            </IconButton>
+                            </IconButton> */}
                         </CardActions>
                     </Card>
                     <Card sx={{ minWidth: 200 }}>
                         <CardHeader
                             title="Isha'a"
+                            style={{ textAlign: 'center',backgroundColor: "#64b5f6"}}  
                         />
                         <CardContent>
-                            <Typography variant="h2" color="text.secondary">
-                                {isha}
-                            </Typography>
+                            <Box 
+                                display="flex" 
+                            >
+                                <Box m="auto">
+                                <Typography variant="h2" color="text.secondary" m="auto">
+                                    {isha}
+                                </Typography>
+                                </Box>
+                            </Box>
                         </CardContent>
-                        <CardActions sx={{alignItems:"center"}}>
-                            <IconButton onClick={() => handleAdd(9)}>
+                        <CardActions>
+                            <Button variant="contained" onClick={() => handleAdd(9)} fullWidth>
+                                <KeyboardDoubleArrowLeftSharpIcon />
+                            </Button>
+                            <Button variant="contained" onClick={() => handleAdd(10)} fullWidth>
+                                <KeyboardDoubleArrowRightSharpIcon/>
+                            </Button>
+                            {/* <IconButton onClick={() => handleAdd(9)}>
                                 <KeyboardDoubleArrowLeftSharpIcon/>
                             </IconButton>
                             <IconButton onClick={() => handleAdd(10)}>
                                 <KeyboardDoubleArrowRightSharpIcon/>
-                            </IconButton>
+                            </IconButton> */}
                         </CardActions>
                     </Card>
                 </Stack>

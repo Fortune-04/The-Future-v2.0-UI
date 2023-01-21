@@ -23,13 +23,13 @@ const theme = createTheme({
       main: '#64b5f6'
     }
   },
-  // typography: {
-  //   fontFamily: 'Quicksand',
-  //   fontWeightLight: 400,
-  //   fontWeightRegular: 500,
-  //   fontWeightMedium: 600,
-  //   fontWeightBold: 700,
-  // }
+  typography: {
+    fontFamily: '"Segoe UI"',
+    fontWeightLight: 400,
+    fontWeightRegular: 500,
+    fontWeightMedium: 600,
+    fontWeightBold: 700,
+  }
 });
 
 function App() {

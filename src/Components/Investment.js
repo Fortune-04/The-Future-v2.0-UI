@@ -37,25 +37,43 @@ const Investment = () => {
 
     //Keep temporary data from API
     const [datas, setDatas] = useState([]);
+    // const [totalValue, setTotalValue] = useState();
+    // const [totalCapital, setTotalCapital] = useState();
+    // const [totalProfit, setTotalProfit] = useState();
+    // let value = 0;
+    // let capital = 0;
+
+    // const calc = () => {
+    //   for(let i=0;i<datas.length;i++){
+    //     let value = value + datas[i].values;
+    //     let capital = capital + datas[i].exvalue;
+    //   }
+
+    //   setTotalValue(value);
+    //   setTotalCapital(capital);
+    //   setTotalProfit(totalValue - totalCapital);
+    // }
 
     useEffect(() => {
 
-        const fetchData = async () => {
-        try {
-          const response = await NetworthFinder.get("/")
-          if(response.data.length !==0 ){
-            for(let i=0;i<response.data.length;i++){
-              if(response.data[i].invest == true){
-                  setDatas(data => [...data, response.data[i]])
-              }
+      const fetchData = async () => {
+      try {
+        const response = await NetworthFinder.get("/")
+        if(response.data.length !==0 ){
+          for(let i=0;i<response.data.length;i++){
+            if(response.data[i].invest == true){
+                setDatas(data => [...data, response.data[i]])
             }
           }
-        } catch (err) {
-            console.error(err.message);
         }
-        };
+        
+      } catch (err) {
+          console.error(err.message);
+      }
+      };
 
-        fetchData();
+      fetchData();
+      // calc();
 
     },[])
 
@@ -82,6 +100,12 @@ const Investment = () => {
               <StyledTableCell align="right">{data.values-data.exvalue}</StyledTableCell>
               </StyledTableRow>
             ))}
+            {/* <TableRow >
+              <TableCell>Result</TableCell>
+              <TableCell align="right">{totalValue}</TableCell>
+              <TableCell align="right">{totalCapital}</TableCell>
+              <TableCell align="right">{totalProfit}</TableCell>
+            </TableRow> */}
             </TableBody>
           </Table>
         </TableContainer>

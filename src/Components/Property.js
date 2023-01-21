@@ -161,31 +161,31 @@ const Property = () => {
         <Grid container rowSpacing={1} sx={{mt:2}} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
         {datas && datas.map((data) => (
             <Grid item xs={3} key={data.id}>
-            <Card >
-                <CardMedia
-                    component="img"
-                    height="140"
-                    image="property.jpg"
-                    alt="property-image"
-                />
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                    {data.name}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                    {data.description}
-                    </Typography>
-                </CardContent>
-                <CardActions disableSpacing>
-                    <IconButton color="primary" aria-label="edit-property-button" onClick={() => handleOpenUpdate(data.id, data.name, data.description)}>
-                        <ModeEditSharpIcon/>
-                    </IconButton>
-                    <IconButton sx={{marginLeft: 'auto'}} color="error" aria-label="delete-property-button" onClick={() => handleOpenDelModal(data.id)}>
-                        <DeleteOutlineSharpIcon/>
-                    </IconButton>
-                </CardActions>
-            </Card>
-        </Grid>
+                <Card >
+                    <CardMedia
+                        component="img"
+                        height="140"
+                        image="property.jpg"
+                        alt="property-image"
+                    />
+                    <CardContent>
+                        <Typography gutterBottom variant="h5" component="div">
+                        {data.name}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                        {data.description}
+                        </Typography>
+                    </CardContent>
+                    <CardActions disableSpacing>
+                        <IconButton color="primary" aria-label="edit-property-button" onClick={() => handleOpenUpdate(data.id, data.name, data.description)}>
+                            <ModeEditSharpIcon/>
+                        </IconButton>
+                        <IconButton sx={{marginLeft: 'auto'}} color="error" aria-label="delete-property-button" onClick={() => handleOpenDelModal(data.id)}>
+                            <DeleteOutlineSharpIcon/>
+                        </IconButton>
+                    </CardActions>
+                </Card>
+            </Grid>
         ))} 
         </Grid>
 

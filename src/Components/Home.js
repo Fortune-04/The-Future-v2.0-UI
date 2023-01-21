@@ -19,6 +19,9 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
+/*Import from Material Icon*/
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+
 //Style for modal
 const style = {
     position: 'absolute',
@@ -125,23 +128,32 @@ const Home = () => {
 
     return(
         <>
-        <Grid container spacing={2}>
+        <Grid container spacing={1}>
             <Grid item xs={4}>
-                <Card sx={{minHeight:125}}>
+                <Card sx={{minHeight:130}}>
                     <CardHeader
                         title="Total Networth"
                     />
                     <Stack
-                            direction="row"
-                            justifyContent="space-between"
-                            alignItems="center"
-                            spacing={2}
-                        >
+                        direction="row"
+                        justifyContent="space-between"
+                        alignItems="center"
+                        spacing={2}
+                    >
                         <CardContent>
-                            <Typography variant="body2" color="text.secondary">
-                                {total_networth}
-                            </Typography>
+                            <Stack
+                                direction="row"
+                                justifyContent="flex-start"
+                                alignItems="flex-start"
+                                spacing={0}
+                            >
+                                <AttachMoneyIcon/>
+                                <Typography variant="body1" color="text.secondary">
+                                    {total_networth}
+                                </Typography>
+                            </Stack>
                         </CardContent>
+                        
                         <IconButton color="primary" aria-label="add to shopping cart" sx={{p:2}} onClick={handleOpenUpdateModal}>
                             <SyncSharpIcon />
                         </IconButton>
@@ -149,32 +161,48 @@ const Home = () => {
                 </Card>
             </Grid>
             <Grid item xs={4}>
-                <Card sx={{minHeight:125}}>
+                <Card sx={{minHeight:130}}>
                     <CardHeader
                         title="Monthly Income"
                     />
                     <CardContent>
-                        <Typography variant="body2" color="text.secondary">
-                            {income}
-                        </Typography>
+                        <Stack
+                            direction="row"
+                            justifyContent="flex-start"
+                            alignItems="flex-start"
+                            spacing={0}
+                        >
+                            <AttachMoneyIcon/>
+                            <Typography variant="body1" color="text.secondary">
+                                {income}
+                            </Typography>
+                        </Stack>
                     </CardContent>
                 </Card>
             </Grid>
             <Grid item xs={4}>
-                <Card sx={{minHeight:125}}>
+                <Card sx={{minHeight:130}}>
                     <CardHeader
                         title="Total Donation"
                     />
                     <CardContent>
-                        <Typography variant="body2" color="text.secondary">
-                            {donation}
-                        </Typography>
+                        <Stack
+                            direction="row"
+                            justifyContent="flex-start"
+                            alignItems="flex-start"
+                            spacing={0}
+                        >
+                            <AttachMoneyIcon/>
+                            <Typography variant="body1" color="text.secondary">
+                                {donation}
+                            </Typography>
+                        </Stack>
                     </CardContent>
                 </Card>
             </Grid>
         </Grid>
 
-        <Paper sx={{mt:2}}>
+        <Paper sx={{mt:1}}>
             <LineChart xAxis={xAxis} yAxis={yAxis}/>
         </Paper>
 

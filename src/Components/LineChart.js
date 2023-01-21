@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {Line} from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 
@@ -10,44 +10,30 @@ const LineChart = ({xAxis,yAxis}) => {
                 title='Total Networth vs Time'
                 data={{
                     labels: xAxis,
-                    // labels: ['Mathematics', 'Physics', 'Chemistry', 'Biology'],
                     datasets: [{
-                        barPercentage: 0.5,
-                        barThickness: 80,
-                        maxBarThickness: 80,
-                        minBarLength: 2,
+                        // barPercentage: 0.5,
+                        // barThickness: 4,
+                        // maxBarThickness: 80,
+                        // minBarLength: 2,
                         data: yAxis,
-                        // data: [34, 56, 34, 45],
-
-                        // backgroundColor: [
-                        //     'rgba( 255, 0, 0, 0.8)',
-                        //     'rgba( 0, 0, 0, 0.8)',
-                        //     'rgba(97, 70, 46, 0.8)',
-                        //     'rgba(0, 128, 0, 0.5)',
-                        // ],
-
-                        backgroundColor: [
-                            'rgba( 0, 255, 0, 0.8)',
-                        ],
-
-                        
+                        borderColor: 'rgba(53, 162, 235, 1)',
+                        backgroundColor: 'rgba( 53, 162, 235, 0.8)',
                     }]
                 }}
                 
                 height={430}
                 width={1000}
                 options={{
-                    // indexAxis: 'y',
                     scales: {
                         
                         x: {
                             grid: {
-                                display: false
+                                display: true
                             }
                         },
                         y: {
                             grid: {
-                                display: false
+                                display: true
                             }
                         }
                     },
