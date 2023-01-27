@@ -10,6 +10,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
 //Table
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -109,6 +115,11 @@ const Investment = () => {
             </TableBody>
           </Table>
         </TableContainer>
+        <Card sx={{mt:2}}>
+          <Typography>Total: </Typography>
+          <Typography>Capital: </Typography>
+          <Typography>Profit: </Typography>
+        </Card>
         </>
     );
 }
