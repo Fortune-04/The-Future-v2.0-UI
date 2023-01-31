@@ -46,47 +46,47 @@ const Investment = () => {
   const [totalValue, setTotalValue] = useState(0);
   const [totalCapital, setTotalCapital] = useState(0);
   const [totalProfit, setTotalProfit] = useState(0);
-  // let value = 0;
-  // let capital = 0;
+  let value = 0;
+  let capital = 0;
 
   const calc = () => {
     for(let i=0;i<datas.length;i++){
-      // let value = value + datas[i].values;
-      // let capital = capital + datas[i].exvalue;
-      setTotalValue(totalValue+datas[i].values);
-      setTotalCapital(totalCapital+datas[i].exvalue);
+      value = value + datas[i].values;
+      capital = capital + datas[i].exvalue;
     }
 
-    // setTotalValue(value);
-    // setTotalCapital(capital);
-    setTotalProfit(totalValue - totalCapital);
+    setTotalValue(value);
+    setTotalCapital(capital);
+    setTotalProfit(value - capital);
   }
 
   useEffect(() => {
 
     const fetchData = async () => {
-    try {
-      const response = await NetworthFinder.get("/")
-      if(response.data.length !==0 ){
-        for(let i=0;i<response.data.length;i++){
-          if(response.data[i].invest == true){
-              setDatas(data => [...data, response.data[i]])
+      try {
+        const response = await NetworthFinder.get("/")
+        if(response.data.length !==0 ){
+          for(let i=0;i<response.data.length;i++){
+            if(response.data[i].invest == true){
+                setDatas(data => [...data, response.data[i]])
+            }
           }
         }
+        
+      } catch (err) {
+          console.error(err.message);
       }
-      
-    } catch (err) {
-        console.error(err.message);
-    }
     };
 
     fetchData();
-    if(datas){
-      calc();
-    }
-    
 
   },[])
+
+  useEffect(() => {
+
+    calc();    
+
+  },[datas])
 
   return(
     <>
