@@ -313,7 +313,6 @@ const Prayer = () => {
                 Successfully update!
             </Alert>
         </Snackbar>
-        test
         </>
     )
 }
