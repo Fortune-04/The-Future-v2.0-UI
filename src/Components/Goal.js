@@ -97,7 +97,7 @@ const Goal = ({type, handleOpenUpdate, handleTaskComplete}) => {
                         <LinearProgressWithLabel value={data.current/data.target*100} />
                     </CardContent>
                     <CardActions>
-                        <IconButton sx={{marginLeft: 'auto'}} aria-label="delete-goal-button" color="success" onClick={() => handleTaskComplete(data.id)}>
+                        <IconButton sx={{marginLeft: 'auto'}} aria-label="delete-goal-button" color="success" onClick={() => {handleTaskComplete(data.id); fetchData()}}>
                             <TaskAltSharpIcon/>
                         </IconButton>
                     </CardActions>

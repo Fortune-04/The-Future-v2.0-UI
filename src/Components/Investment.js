@@ -84,7 +84,7 @@ const Investment = () => {
 
   useEffect(() => {
 
-    calc();    
+    calc();
 
   },[datas])
 
@@ -95,9 +95,9 @@ const Investment = () => {
         <TableHead>
         <TableRow>
           <StyledTableCell>Investment</StyledTableCell>
-          <StyledTableCell align="right">Value</StyledTableCell>
-          <StyledTableCell align="right">Capital</StyledTableCell>
-          <StyledTableCell align="right">Profit</StyledTableCell>
+          <StyledTableCell align="center">Value (MYR)</StyledTableCell>
+          <StyledTableCell align="center">Capital (MYR)</StyledTableCell>
+          <StyledTableCell align="right">Profit (MYR)</StyledTableCell>
         </TableRow>
         </TableHead>
         <TableBody>
@@ -106,8 +106,8 @@ const Investment = () => {
           <StyledTableCell component="th" scope="row">
               {data.names}
           </StyledTableCell>
-          <StyledTableCell align="right">{data.values}</StyledTableCell>
-          <StyledTableCell align="right">{data.exvalue}</StyledTableCell>
+          <StyledTableCell align="center">{data.values}</StyledTableCell>
+          <StyledTableCell align="center">{data.exvalue}</StyledTableCell>
           <StyledTableCell align="right">{data.values-data.exvalue}</StyledTableCell>
           </StyledTableRow>
         ))}

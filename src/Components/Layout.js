@@ -63,11 +63,11 @@ const menuItems= [
         icon: <DescriptionSharpIcon color="secondary"/>,
         path: 'surah'
     },
-    {
-        text: 'Donation',
-        icon: <VolunteerActivismSharpIcon color="secondary"/>,
-        path: 'donation'
-    }
+    // {
+    //     text: 'Donation',
+    //     icon: <VolunteerActivismSharpIcon color="secondary"/>,
+    //     path: 'donation'
+    // }
 ]
 
 const useStyles = makeStyles((theme) => {

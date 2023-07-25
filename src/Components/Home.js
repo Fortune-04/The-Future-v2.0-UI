@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react';
 import NetworthFinder from "../Apis/NetworthFinder";
 import DonationFinder from '../Apis/DonationFinder';
 import HomeFinder from '../Apis/HomeFinder';
+import Calculation from './Other/Calculation';
 
 /*Import from Material UI*/
 import Stack from '@mui/material/Stack';
@@ -12,7 +13,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import { Paper } from '@mui/material';
-import LineChart from './LineChart';
+import LineChart from './Other/LineChart';
 import IconButton from '@mui/material/IconButton';
 import SyncSharpIcon from '@mui/icons-material/SyncSharp';
 import Modal from '@mui/material/Modal';
@@ -129,7 +130,7 @@ const Home = () => {
     return(
         <>
         <Grid container spacing={1}>
-            <Grid item xs={4}>
+            <Grid item xs={3}>
                 <Card sx={{minHeight:130}}>
                     <CardHeader
                         title="Total Networth"
@@ -160,7 +161,7 @@ const Home = () => {
                     </Stack>
                 </Card>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={3}>
                 <Card sx={{minHeight:130}}>
                     <CardHeader
                         title="Monthly Income"
@@ -180,10 +181,30 @@ const Home = () => {
                     </CardContent>
                 </Card>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={3}>
                 <Card sx={{minHeight:130}}>
                     <CardHeader
-                        title="Total Donation"
+                        title="Investment Profit"
+                    />
+                    <CardContent>
+                        <Stack
+                            direction="row"
+                            justifyContent="flex-start"
+                            alignItems="flex-start"
+                            spacing={0}
+                        >
+                            <AttachMoneyIcon/>
+                            <Typography variant="body1" color="text.secondary">
+                                <Calculation type="profit"/>
+                            </Typography>
+                        </Stack>
+                    </CardContent>
+                </Card>
+            </Grid>
+            <Grid item xs={3}>
+                <Card sx={{minHeight:130}}>
+                    <CardHeader
+                        title="Monthly Profit"
                     />
                     <CardContent>
                         <Stack
