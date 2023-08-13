@@ -14,6 +14,7 @@
     "chart.js": "^3.9.1",
     "concurrently": "^7.3.0",
     "cross-env": "^7.0.3",
+    "electron-builder": "^23.3.3",
     "react": "^18.2.0",
     "react-chartjs-2": "^4.3.1",
     "react-dom": "^18.2.0",
@@ -24,11 +25,11 @@
   },
   "main": "main.js",
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set PORT=3400 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electron-react": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\""
+    "electron-react": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3400 && electron .\""
   },
   "eslintConfig": {
     "extends": [
