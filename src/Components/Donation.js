@@ -10,20 +10,49 @@ import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
+import IconButton from '@mui/material/IconButton';
+
+/*Import from Material Icon*/
+import AddBoxSharpIcon from '@mui/icons-material/AddBoxSharp';
+import IndeterminateCheckBoxSharpIcon from '@mui/icons-material/IndeterminateCheckBoxSharp';
 
 const Donation = () => {
 
-    const [amount_donated, setAmount] = useState();
+    const [amount2, setAmount2] = useState();
+    const [amount, setAmount] = useState("");
     const [temp, setTemp] = useState();
     // const [date, setDate] = useState("");
 
     const handleSubmit = async(e) =>{
         e.preventDefault()
 
-        let total = temp - amount_donated;
+        let total = temp - amount;
+        let amount_donated = parseInt(amount2)+parseInt(amount);
+        console.log("amounts23: ", amount_donated)
+
         try {
-            await DonationFinder.put(`/update/1`, {amount_donated, total})
+            await DonationFinder.put(`/update/1`, {amount, amount_donated, total})
             setAmount(0);
+            fetchData()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleAdd = async(e) => {
+        let amt = temp +1
+        try {
+            await DonationFinder.put(`/update/total/1`, {amt})
+            fetchData()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleMinus = async(e) => {
+        let amt = temp -1
+        try {
+            await DonationFinder.put(`/update/total/1`, {amt})
             fetchData()
         } catch (error) {
             console.log(error)
@@ -35,28 +64,32 @@ const Donation = () => {
             const response = await DonationFinder.get("/")
             console.log(response.data.length);
             setTemp(response.data[0].total);
-            calculateHour(response.data[0].updated_at)
+            // calculateHour(response.data[0].updated_at)
+            setAmount2(response.data[0].amount_donated)
         } catch (err) {
             console.error(err.message);
         }
     };
 
-    const calculateHour = (pastDate) => {
-        let today = new Date();
-        let past = new Date(pastDate);
-        let timeDif = (today - past)/3600000;
+    // const calculateHour = (pastDate) => {
+    //     let today = new Date();
+    //     let past = new Date(pastDate);
+    //     let timeDif = (today - past)/3600000;
 
-        // if(timeDif > 24){
+    //     // if(timeDif > 24){
 
-        // }
+    //     // }
 
-    }
+    // }
 
     useEffect(() => {
 
         fetchData();
 
     },[])
+
+    console.log("amount", amount);
+    console.log("amountdoanated", amount2);
 
     return(
         <>
@@ -65,20 +98,49 @@ const Donation = () => {
             height={500} 
         >
             <Box m="auto">
+                {/* <Paper  sx={{
+                            backgroundImage: 'url(/donate-image.gif)',
+                            backgroundRepeat: 'no-repeat',
+                            backgroundColor: (t) =>
+                            t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+                            backgroundPosition: 'center',
+                            width: 400,
+                            height: 400,
+                        }}
+                    >
+
+                </Paper> */}
                 <Paper elevation={0} sx={{p:2}}>
-                    <Typography variant="h2">{temp}</Typography>
+                    <Typography variant="h1">{temp}</Typography>
                 </Paper >
+                <Stack
+                    direction="row"
+                    justifyContent="center"
+                    alignItems="center"
+                    spacing={2}
+                >
+                    <IconButton onClick={handleMinus}>
+                        <IndeterminateCheckBoxSharpIcon/>
+                    </IconButton>
+                    <IconButton onClick={handleAdd}>
+                        <AddBoxSharpIcon/>
+                    </IconButton>
+                </Stack>
+                
             </Box>
         </Box>
         <form noValidate autoComplete="off" onSubmit={handleSubmit}>
-            <Stack direction="row" spacing={1}>
+            <Stack
+                direction="row"
+                justifyContent="center"
+                // alignItems="center"
+                spacing={1}>
                 <TextField
-                    margin="normal"
                     required
                     id="amount"
                     label="Amount"
                     name="amount"
-                    value={amount_donated}
+                    value={amount}
                     onChange={e => setAmount(e.target.value)}
                 />
                 <Button

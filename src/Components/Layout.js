@@ -11,7 +11,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import Avatar from '@mui/material/Avatar';
+// import Avatar from '@mui/material/Avatar';
 import Divider from '@mui/material/Divider';
 import Box from '@mui/material/Box';
 
@@ -63,11 +63,11 @@ const menuItems= [
         icon: <DescriptionSharpIcon color="secondary"/>,
         path: 'surah'
     },
-    {
-        text: 'Donation',
-        icon: <VolunteerActivismSharpIcon color="secondary"/>,
-        path: 'donation'
-    }
+    // {
+    //     text: 'Donation',
+    //     icon: <VolunteerActivismSharpIcon color="secondary"/>,
+    //     path: 'donation'
+    // }
 ]
 
 const useStyles = makeStyles((theme) => {

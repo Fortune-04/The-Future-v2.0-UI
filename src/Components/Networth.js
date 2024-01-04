@@ -26,6 +26,11 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Grid from '@mui/material/Grid';
 
 /*Import from Material Icons*/
 import EditSharpIcon from '@mui/icons-material/EditSharp';
@@ -85,13 +90,19 @@ const Networth = () => {
     setName(name)
     setValue(value)
     setexvalue(exvalue)
-    setInvest(invest)
+    if(invest === 1){
+      setInvest(true)
+    }
+    else{
+      setInvest(false)
+    }
     setOpenUpdate(true)
   }
   const handleCloseUpdate = () => {
-    setId()
     setName("")
-    setValue()
+    setValue(0)
+    setexvalue(0)
+    setInvest(null)
     setOpenUpdate(false)
   }
 
@@ -107,6 +118,7 @@ const Networth = () => {
   const [openSnackUp, setOpenSnackUp] = useState(false);
   const handleClickSnackUp = () => {
     setOpenSnackUp(true)
+
   };
   const handleCloseSnackUp = (event, reason) => {
     if (reason === 'clickaway') {
@@ -153,6 +165,11 @@ const Networth = () => {
       );
       console.log(response);
       setOpen(false)
+      setName("");
+      setValue(0);
+      setexvalue(0);
+      setDatas([])
+      fetchData();
       
     } catch (err) {
       console.error(err.message);
@@ -178,27 +195,30 @@ const Networth = () => {
     e.preventDefault();
     try {
       const response = await NetworthFinder.put(`/update/${id}`, {names, values, exvalue, invest})
+      console.log(response)
+      setDatas([]);
+      fetchData();
     } catch (error) {
       console.log(error)
     }
     setOpenUpdate(false)
   }
 
-  useEffect(() => {
-
-    const fetchData = async () => {
-      try {
-        const response = await NetworthFinder.get("/")
-        console.log(response.data.length);
-        if(response.data.length !==0 ){
-          for(let i=0;i<response.data.length;i++){
-            setDatas(data => [...data, response.data[i]])
-          }
+  const fetchData = async () => {
+    try {
+      const response = await NetworthFinder.get("/")
+      console.log(response.data.length);
+      if(response.data.length !==0 ){
+        for(let i=0;i<response.data.length;i++){
+          setDatas(data => [...data, response.data[i]])
         }
-      } catch (err) {
-        console.error(err.message);
       }
-    };
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  useEffect(() => {
 
     fetchData();
 
@@ -206,7 +226,37 @@ const Networth = () => {
 
   return(
     <>
-    <TableContainer component={Paper}>
+    <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
+    {datas && datas.map((data) => (
+          <Grid item xs={3} key={data.id}>
+            <Card >
+                <CardMedia
+                    component="img"
+                    height="140"
+                    image="money.jpg"
+                    alt="money-image"
+                />
+                <CardContent style={{ textAlign: 'center'}}>
+                    <Typography gutterBottom variant="h5" component="div">
+                    {data.names}
+                    </Typography>
+                    <Typography variant="h6" color="text.secondary">
+                    {data.values}
+                    </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button variant="contained" onClick={() => handleOpenUpdate(data.id, data.names, data.values, data.exvalue, data.invest)} color="secondary" fullWidth>
+                    <EditSharpIcon/>
+                  </Button>
+                  <Button variant="outlined" onClick={() => handleOpenDelModal(data.id)} color="error" fullWidth>
+                    <DeleteSharpIcon/>
+                  </Button>
+                </CardActions>
+            </Card>
+          </Grid>
+    ))}
+    </Grid>
+    {/* <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
         <TableRow>
@@ -237,7 +287,7 @@ const Networth = () => {
         ))}
         </TableBody>
       </Table>
-    </TableContainer>
+    </TableContainer> */}
 
     <Box
       display="flex" 
@@ -246,7 +296,7 @@ const Networth = () => {
       <Box m="auto">
         <Stack direction="row" spacing={1} >
           <Button onClick={handleOpen} variant="contained">Add</Button>
-          <Button variant="contained">Update</Button>
+          {/* <Button variant="contained">Update</Button> */}
         </Stack>
       </Box>
     </Box>
@@ -343,8 +393,6 @@ const Networth = () => {
     <Modal
       open={openUpdate}
       // onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
         <Typography id="modal-modal-title" variant="h6" component="h2">

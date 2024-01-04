@@ -5,7 +5,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 // import './App.css';
 import Networth from './Components/Networth';
-import Goal from './Components/Goal';
+import GoalNav from './Components/GoalNav';
 import Donation from './Components/Donation';
 import Layout from "./Components/Layout";
 import Home from "./Components/Home";
@@ -23,13 +23,13 @@ const theme = createTheme({
       main: '#64b5f6'
     }
   },
-  // typography: {
-  //   fontFamily: 'Quicksand',
-  //   fontWeightLight: 400,
-  //   fontWeightRegular: 500,
-  //   fontWeightMedium: 600,
-  //   fontWeightBold: 700,
-  // }
+  typography: {
+    fontFamily: '"Segoe UI"',
+    fontWeightLight: 400,
+    fontWeightRegular: 500,
+    fontWeightMedium: 600,
+    fontWeightBold: 700,
+  }
 });
 
 function App() {
@@ -41,7 +41,7 @@ function App() {
             <Route index element={<Home/>}/>
             <Route path='networth' element={<Networth/>}/>
             <Route path='investment' element={<Investment/>}/>
-            <Route path='goal' element={<Goal/>}/>
+            <Route path='goal' element={<GoalNav/>}/>
             <Route path='property' element={<Property/>}/>
             <Route path='prayer' element={<Prayer/>}/>
             <Route path='surah' element={<Surah/>}/>
